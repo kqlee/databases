@@ -2,15 +2,25 @@ var db = require('../db');
 
 module.exports = {
   messages: {
-    get: function (data) {
+    get: function (arg1, callback) {
+      var queryArgs = [];
+      var queryString = "SELECT * FROM messages";
+      db.query(queryString, queryArgs, function(err, results) {
+        if (err) {
+          console.log('ERROR on MODELS messages get: ', err);
+        } else {
+          callback(err, results);
+        }
+      });
     }, // a function which produces all the messages
     post: function (data, callback) {
-      var queryString = '';
-      db.query(queryString, function(err, result) {
+      var queryArgs = [data.message, data.roomname];
+      var queryString = "INSERT INTO messages (text, user_id, roomname) VALUES (?, 1, ?)";
+      db.query(queryString, queryArgs, function(err, results) {
         if (err) {
           console.log('Error in models messages post: ', err);
         } else {
-          callback(err, result);
+          callback(err, results);
         }
       });
     } // a function which can be used to insert a message into the database
@@ -18,19 +28,25 @@ module.exports = {
 
   users: {
     // Ditto as above.
-    get: function (data) {
-      
+    get: function (callback) {
+      var queryString = 'SELECT * FROM users';
+      var queryArgs = [];
+      db.query(queryString, queryArgs, function(err, results) {
+        if (err) {
+          console.log('Error on Model USERS GET: ', err);
+        } else {
+          callback(err, results);
+        }
+      });
     },
     post: function (data, callback) {
-      console.log('>>>>>>>>>>> data: ', data);
-      var queryString = 'INSERT INTO users (username) VALUES("' + data.username + '");';
-      db.query(queryString, function(err, result) {
-        console.log('err = ', err);
-        console.log('result = ', result);
+      var queryArgs = [data.username];
+      var queryString = 'INSERT INTO users (username) VALUES(?);';
+      db.query(queryString, queryArgs, function(err, results) {
         if (err) {
           console.log(err);
         } else {
-          callback(err, result);
+          callback(err, results);
         }
       });
     }
