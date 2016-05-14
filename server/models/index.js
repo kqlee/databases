@@ -14,8 +14,8 @@ module.exports = {
       });
     }, // a function which produces all the messages
     post: function (data, callback) {
-      var queryArgs = [data.message, data.roomname];
-      var queryString = "INSERT INTO messages (text, user_id, roomname) VALUES (?, 1, ?)";
+      var queryArgs = [data.message, data.username, data.roomname];
+      var queryString = "INSERT INTO messages (text, user_id, roomname) VALUES (?, (SELECT id FROM users WHERE username = ? LIMIT 1), ?)";
       db.query(queryString, queryArgs, function(err, results) {
         if (err) {
           console.log('Error, could not store message: ', err);

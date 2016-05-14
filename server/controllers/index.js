@@ -25,7 +25,6 @@ module.exports = {
   users: {
     // Ditto as above
     get: function (req, res) {
-      console.log('>>>>> GET: post to users: ', req.body);
       models.users.get(null, function(err, results) {
         if (err) {
           console.log('Error getting users: ', err);
