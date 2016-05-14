@@ -2,12 +2,12 @@ var db = require('../db');
 
 module.exports = {
   messages: {
-    get: function (arg1, callback) {
+    get: function (data, callback) {
       var queryArgs = [];
       var queryString = "SELECT * FROM messages";
       db.query(queryString, queryArgs, function(err, results) {
         if (err) {
-          console.log('ERROR on MODELS messages get: ', err);
+          console.log('Error, could not retrieve messages: ', err);
         } else {
           callback(err, results);
         }
@@ -18,7 +18,7 @@ module.exports = {
       var queryString = "INSERT INTO messages (text, user_id, roomname) VALUES (?, 1, ?)";
       db.query(queryString, queryArgs, function(err, results) {
         if (err) {
-          console.log('Error in models messages post: ', err);
+          console.log('Error, could not store message: ', err);
         } else {
           callback(err, results);
         }
@@ -33,7 +33,7 @@ module.exports = {
       var queryArgs = [];
       db.query(queryString, queryArgs, function(err, results) {
         if (err) {
-          console.log('Error on Model USERS GET: ', err);
+          console.log('Error, could not retrieve users: ', err);
         } else {
           callback(err, results);
         }
@@ -44,7 +44,7 @@ module.exports = {
       var queryString = 'INSERT INTO users (username) VALUES(?);';
       db.query(queryString, queryArgs, function(err, results) {
         if (err) {
-          console.log(err);
+          console.log('Error, could not store user: ', err);
         } else {
           callback(err, results);
         }

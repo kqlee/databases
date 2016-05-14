@@ -5,7 +5,7 @@ module.exports = {
     get: function (req, res) {
       models.messages.get(null, function(err, results) {
         if (err) {
-          console.log('Error in Controller messages get: ', err);
+          console.log('Error getting messages: ', err);
         } else {
           res.end(JSON.stringify(results));
         }
@@ -14,7 +14,7 @@ module.exports = {
     post: function (req, res) {
       models.messages.post(req.body, function(err, results) {
         if (err) {
-          console.log('Error in controller messages post: ', err);
+          console.log('Error posting message: ', err);
         } else {
           res.sendStatus(201);
         }
@@ -26,9 +26,9 @@ module.exports = {
     // Ditto as above
     get: function (req, res) {
       console.log('>>>>> GET: post to users: ', req.body);
-      models.users.get(req.body, function(err, results) {
+      models.users.get(null, function(err, results) {
         if (err) {
-          console.log('Error on Controller users get: ', err);
+          console.log('Error getting users: ', err);
         } else {
           res.end(JSON.stringify(results));
         }
@@ -37,7 +37,7 @@ module.exports = {
     post: function (req, res) {
       models.users.post(req.body, function(err, results) {
         if (err) {
-          console.log('Error on post controller:', err);
+          console.log('Error posting user:', err);
         } else {
           res.sendStatus(201);
         }
